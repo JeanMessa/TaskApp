@@ -92,7 +92,7 @@ public partial class MinhasAtividades : ContentPage
 
     }
 
-    private void pickerFiltro_SelectedIndexChanged(object sender, EventArgs e)
+    private void pickerFiltro_SelectedIndexChanged(object sender, EventArgs e) { 
         listarAtividades();
     }
 
