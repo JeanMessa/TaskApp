@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converter="clr-namespace:TrabalhoFinalMAUI.Converter"
+             x:Class="TrabalhoFinalMAUI.MinhasAtividades"
+             Title="flyoutTelasPrincipais"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Resources>
+        <!-- Inclui os converters para binding de dados-->
+        <converter:ConverterSituacaoTachado x:Key="ConverterSituacaoTachado"/>
+        <converter:ConverterTerminoPrazo x:Key="ConverterTerminoPrazo"/>
+        <converter:ConverterPrazoCor x:Key="ConverterPrazoCor"/>
+        <converter:ConverterThemeIcone x:Key="ConverterThemeIcone"/>
+	</ContentPage.Resources>
+    <AbsoluteLayout> <!--Utilizado para manter o botão "+" flutuando na tela-->
+        <ScrollView AbsoluteLayout.LayoutFlags="SizeProportional"
+                    AbsoluteLayout.LayoutBounds="0,0,1,1"                 
+                    >
+            <VerticalStackLayout>
+                <HorizontalStackLayout BackgroundColor="{StaticResource Primary}">
+                    <ImageButton Style="{StaticResource BtnVoltar}"  x:Name="btnVoltar" Clicked="btnVoltar_Clicked"/>
+                    <ImageButton Style="{StaticResource BtnMenu}" x:Name="btnMenu" Clicked="btnMenu_Clicked"/>
+                    <Label Text="Minhas Atividades" 
+                           Style="{StaticResource TituloTela}"/>
+                </HorizontalStackLayout>
+                <VerticalStackLayout Padding="0,0,0,10">
+                    <!--Existe um bug no android em que ,se um picker for o primeiro evento de formulário,
+                    seu popup é aberto ao retornar para a página, o entry está aqui para corrigir esse erro-->
+                    <Entry 
+                        HeightRequest="1"
+                        IsVisible="{OnPlatform Default=False, Android=True}"
+                        />
+                    <Picker Margin="5,5,5,0" x:Name="pickerFiltro" SelectedIndexChanged="pickerFiltro_SelectedIndexChanged">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Exibir todas as atividades</x:String>
+                                <x:String>Exibir atividades em atraso</x:String>
+                                <x:String>Exibir atividades dentro do prazo</x:String>
+                                <x:String>Exibir atividades em andamento </x:String>
+                                <x:String>Exibir atividades concluidas</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+
+                    <Border Stroke="{AppThemeBinding Dark={StaticResource White}, Light={StaticResource Black}}" Margin="5,10,10,10">
+                        <VerticalStackLayout>
+                            <RefreshView  x:Name="RefreshViewAtividades" RefreshColor="#780808" Refreshing="RefreshViewAtividades_Refreshing">
+                                <RefreshView.GestureRecognizers>
+                                    <SwipeGestureRecognizer Swiped="AtualizarCollectionViewAtividades" Direction="Down"/>
+                                </RefreshView.GestureRecognizers>
+                                <ScrollView VerticalScrollBarVisibility="Never">
+                                    <VerticalStackLayout>
+                                        <Grid ColumnDefinitions="50,*,100,50" BackgroundColor="#780808" Padding="2,0,2,0" HeightRequest="{OnPlatform Android=50}">
+                                            <Label 
+                                            Text="Feito" 
+                                            TextColor="White" 
+                                            VerticalOptions="Center"
+                                            LineBreakMode="TailTruncation"/>
+                                            <Label Text="Título" Grid.Column="1"
+                                                   TextColor="White"
+                                                   VerticalOptions="Center"
+                                                   LineBreakMode="TailTruncation"/>
+                                            <Label Text="Prazo" 
+                                                    Grid.Column="2" 
+                                                    TextColor="White" 
+                                                    VerticalOptions="Center"
+                                                    LineBreakMode="TailTruncation"/>
+                                            <Label Text="Ver Mais" 
+                                                   HorizontalTextAlignment="Center" 
+                                                   Grid.Column="3" TextColor="White" 
+                                                   VerticalOptions="Center"/>
+                                        </Grid>
+                                        <!-- Mostra as atividades retiradas do bd-->
+                                        <CollectionView x:Name="collectionViewAtividades">
+                                            <CollectionView.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Grid ColumnDefinitions="50,*,100,50" x:Name="gridAtividades" HeightRequest="{OnPlatform Android=70}">
+                                                            <CheckBox 
+                                                    x:Name="checkSituacao"
+                                                    IsChecked="{Binding situacao}"     
+                                                    CheckedChanged="checkSituacao_CheckedChanged"
+                                            
+                                                    />
+                                                        <Label Text="{Binding titulo}"
+                                                           Grid.Column="1"
+                                                           VerticalOptions="Center"
+                                                           LineBreakMode="TailTruncation"
+                                                           TextDecorations="{Binding Source={x:Reference checkSituacao}, Path=IsChecked, Converter={StaticResource ConverterSituacaoTachado}}"
+                                                           />
+                                                        <Label Grid.Column="2"
+                                                                VerticalOptions="Center"
+                                                                LineBreakMode="TailTruncation"
+                                                                x:Name="lblPrazo"
+                                                                TextColor="{Binding Source={x:Reference lblPrazo}, Path=Text, Converter={StaticResource ConverterPrazoCor}}"          
+                                                               >
+                                                            <Label.Text>
+                                                                <MultiBinding Converter="{StaticResource ConverterTerminoPrazo}">
+                                                                    <Binding Path="IsChecked" Source="{x:Reference checkSituacao}"/>
+                                                                    <Binding Path="termino" />
+                                                                </MultiBinding>
+                                                            </Label.Text>
+                                                        </Label>
+                                                        <ImageButton Grid.Column="3" 
+                                                                     VerticalOptions="Center" 
+                                                                     Source="{Binding ConverterParameter='eye', Converter={StaticResource ConverterThemeIcone}}"
+                                                                     Padding="10"
+                                                                     x:Name="btnVerMais"
+                                                                     Clicked="btnVerMais_Clicked"
+                                                                     HeightRequest="{OnPlatform Android=40}"
+                                                                     />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </CollectionView.ItemTemplate>
+                                    </CollectionView>
+                                    </VerticalStackLayout>
+                                </ScrollView>
+                                </RefreshView>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+        
+        <ImageButton
+            Source="add_white.png"
+            BackgroundColor="{StaticResource Primary}"
+            CornerRadius="15"
+            HeightRequest="40"
+            WidthRequest="40"
+            AbsoluteLayout.LayoutFlags="PositionProportional"  
+            AbsoluteLayout.LayoutBounds=".95,.95,50,50" 
+            x:Name="BtnAdd"
+            Clicked="BtnAdd_Clicked"
+            />
+    </AbsoluteLayout>
+</ContentPage>

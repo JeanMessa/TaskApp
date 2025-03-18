@@ -1,0 +1,61 @@
+﻿<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TrabalhoFinalMAUI"
+             x:Class="TrabalhoFinalMAUI.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries> 
+            <Style TargetType="Label" x:Key="TituloTela"> <!-- Estilo para labels que ficam no topo indicando o título da tela -->
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontSize" Value="30"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="Margin" Value="{OnPlatform WinUI='10,0,0,0'}"/>
+            </Style>
+            <Style TargetType="Label" x:Key="TituloNomeApp"> <!-- Estilo para labels que mostram o nome do aplicativo como um título -->
+                <Setter Property="Text" Value="Task App"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="TextColor" Value="{StaticResource Primary}"/>
+                <Setter Property="FontSize" Value="45"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontFamily" Value="BukhariScript"/>
+            </Style>
+            <Style TargetType="Label" x:Key="labelDescricaoCampo"> <!-- Estilo para algumas labels de descrição de entryes-->
+                <Setter Property="FontSize" Value="22"/>
+                <Setter Property="Margin" Value="0,10,0,0"/>
+            </Style>
+            <Style TargetType="Button" x:Key="BtnInvertido"> <!-- Botão com o fundo branco e a cor padrão da aplicação -->
+                <Setter Property="TextColor" Value="{StaticResource Primary}" />
+                <Setter Property="BackgroundColor" Value="White" />
+            </Style>
+            <Style TargetType="Button" x:Key="BtnOutline"> <!-- Botão outline, ou seja, somente uma borda, nesse caso branca, um fundo transparente e o texto da cor da borda-->
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="BorderColor" Value="White"/>
+            </Style>
+            <!-- Os dois botões são usados no android e não no windows, pois o android não mostra de forma conjunta o 
+            botão de voltar da Navigation Page e o botão de menu da Flyout Page-->
+            <Style TargetType="ImageButton" x:Key="BtnMenu"> <!-- Botão para voltar para a página anterior -->
+                <Setter Property="Margin" Value="5,0,20,0"/>
+                <Setter Property="HeightRequest" Value="30" />
+                <Setter Property="WidthRequest" Value="30"/>
+                <Setter Property="Source" Value="menu.png"/>
+                <Setter Property="IsVisible" Value="{OnPlatform WinUI=False}"/>
+            </Style>
+            <Style TargetType="ImageButton" x:Key="BtnVoltar"> <!-- Botão para abrir o menu flyout -->
+                <Setter Property="Margin" Value="5,0,10,0"/>
+                <Setter Property="HeightRequest" Value="30" />
+                <Setter Property="WidthRequest" Value="30"/>
+                <Setter Property="Source" Value="back.png"/>
+                <Setter Property="IsVisible" Value="{OnPlatform WinUI=False}"/>
+            </Style>
+            
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

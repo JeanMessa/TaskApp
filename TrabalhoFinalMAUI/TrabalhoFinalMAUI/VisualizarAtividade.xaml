@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TrabalhoFinalMAUI.VisualizarAtividade"
+             NavigationPage.HasNavigationBar="False"
+             >
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Style" Value="{StaticResource BtnInvertido}"/>
+            <Setter Property="CornerRadius" Value="25"/>
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView BackgroundColor="{StaticResource Primary}" Padding="12">
+        <Grid RowDefinitions="auto,*,*,*,*,*,*,*,*,*,auto" ColumnDefinitions="*,50,*">
+            <HorizontalStackLayout BackgroundColor="{StaticResource Primary}" Grid.Row="0">
+                <ImageButton Style="{StaticResource BtnVoltar}"  x:Name="btnVoltar" Clicked="btnVoltar_Clicked"/>
+                <ImageButton Style="{StaticResource BtnMenu}" x:Name="btnMenu" Clicked="btnMenu_Clicked"/>
+            </HorizontalStackLayout>
+            <Label FontSize="25"
+                   Grid.Row="1"
+                   HorizontalOptions="Center"
+                   x:Name="lblTitulo"
+                   Grid.ColumnSpan="3"
+                   Margin="0,0,0,10"
+                   />
+            <Label Text="Prioridade:" Grid.Row="2"/>
+            <Label x:Name="lblPrioridade" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" />
+            <Label Text="Classificação:" Grid.Row="3"/>
+            <Label x:Name="lblClassificacao" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" />
+            <Label Text="Inicio:" Grid.Row="4"/>
+            <Label x:Name="lblInicio" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" />
+            <Label Text="Término:" Grid.Row="5"/>
+            <Label x:Name="lblTermino" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" />
+            <Label Text="Prazo:" Grid.Row="6"/>
+            <Label x:Name="lblPrazo" Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" />
+            <Label Text="Descricao:" Grid.Row="7" Grid.ColumnSpan="4"/>
+            <Label x:Name="lblDescricao" Grid.Row="8" Grid.ColumnSpan="3"/>
+            <Label Text="Situação:" Grid.Row="9" VerticalOptions="Center"/>
+            <CheckBox Grid.Row="9" Grid.Column="1" Color="#A5372A" x:Name="checkSituacao" CheckedChanged="checkSituacao_CheckedChanged"/>
+            <Label x:Name="lblSituacao" Grid.Row="9" Grid.Column="2" VerticalOptions="Center"/>
+            <Button  Grid.Row="10" 
+                     Text="Editar" 
+                     ImageSource="edit.png" 
+                     ContentLayout="right" 
+                     HeightRequest="40" 
+                     Padding="2,2,2,2"
+                     x:Name="btnEditar"
+                     Clicked="btnEditar_Clicked"/>
+            <Button  Grid.Row="10" 
+                     Text="Excluir"  
+                     ImageSource="delete.png" 
+                     Grid.Column="2" 
+                     ContentLayout="right" 
+                     HeightRequest="40"
+                     x:Name="btnExcluir"
+                     Clicked="btnExcluir_Clicked"/>
+            
+        </Grid>
+
+    </ScrollView>
+</ContentPage>

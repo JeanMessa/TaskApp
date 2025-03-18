@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TrabalhoFinalMAUI.Perfil"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{StaticResource Primary}">
+    <ContentPage.Resources>
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+        <Style TargetType="Label" x:Key="LabelMarginPadrao">
+            <Setter Property="Margin" Value="20,0,10,0"/>
+        </Style>
+    </ContentPage.Resources>
+    <ScrollView>
+        <Grid RowDefinitions="*,*,*,*,*,*,*,*,*" ColumnDefinitions="auto,*">
+            <HorizontalStackLayout BackgroundColor="{StaticResource Primary}" Grid.ColumnSpan="2">
+                <ImageButton Style="{StaticResource BtnVoltar}"  x:Name="btnVoltar" Clicked="btnVoltar_Clicked" VerticalOptions="Center"/>
+                <ImageButton Style="{StaticResource BtnMenu}" x:Name="btnMenu" Clicked="btnMenu_Clicked" VerticalOptions="Center"/>
+                <Label Text="Meu Perfil" VerticalOptions="Center" 
+                        Style="{StaticResource TituloTela}"/>
+            </HorizontalStackLayout> 
+            <Label Text="Usuario:" Grid.Row="1" Margin="20,20,10,0"/>
+            <Label x:Name="lblUsuario" Grid.Row="1" Grid.Column="1" Margin="0,20,0,0"/>
+            <Label Text="Minhas Atividades" Grid.Row="2" Grid.ColumnSpan="2" HorizontalOptions="Center" FontSize="20"/>
+            <Label Text="Total:" Grid.Row="3" Style="{StaticResource LabelMarginPadrao}"/>
+            <Label x:Name="lblTotal" Grid.Row="3" Grid.Column="1"/>
+            <Label Text="Concluídas:" Grid.Row="4" Style="{StaticResource LabelMarginPadrao}"/>
+            <Label x:Name="lblConcluidas" Grid.Row="4" Grid.Column="1"/>
+            <Label Text="Em andamento:" Grid.Row="5" Style="{StaticResource LabelMarginPadrao}"/>
+            <Label x:Name="lblAndamento" Grid.Row="5" Grid.Column="1"/>
+            <Label Text="Atrasadas:" Grid.Row="6" Style="{StaticResource LabelMarginPadrao}"/>
+            <Label x:Name="lblAtrasadas" Grid.Row="6" Grid.Column="1"/>
+            <Label Text="Menor Prazo:" Grid.Row="7" Style="{StaticResource LabelMarginPadrao}"/>
+            <Label x:Name="lblMenorPrazo" Grid.Row="7" Grid.Column="1"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>
